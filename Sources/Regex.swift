@@ -64,31 +64,13 @@ class Regex {
 
     // Match all occurrencies
     static func pregMatchAll(_ string: String, regex: String, index: Int = 0) -> [String] {
-
         do {
-
             let rx = try NSRegularExpression(pattern: regex, options: [.caseInsensitive])
-
-            var matches: [NSTextCheckingResult] = []
-
-            let limit = 300000
-
-            if string.count > limit {
-                string.split(by: limit).forEach {
-                    matches.append(contentsOf: rx.matches(in: string, options: [], range: NSRange($0.startIndex..., in: $0)))
-                }
-            } else {
-                matches.append(contentsOf: rx.matches(in: string, options: [], range: NSRange(string.startIndex..., in: string)))
-            }
-
+            let matches = rx.matches(in: string, options: [], range: NSRange(string.startIndex..., in: string))
             return !matches.isEmpty ? Regex.stringMatches(matches, text: string, index: index) : []
-
         } catch {
-
             return []
-
         }
-
     }
 
     // Extract matches from string
